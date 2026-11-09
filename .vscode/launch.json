@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Standard segmentation run",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "detector_playground.cli",
+      "args": ["data/samples/conveyor_1.jpg", "printed white paper"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    }
+]   
+}
