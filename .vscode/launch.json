@@ -6,7 +6,7 @@
       "type": "debugpy",
       "request": "launch",
       "module": "detector_playground.cli",
-      "args": ["data/samples/conveyor_1.jpg", "printed white paper"],
+      "args": ["data/samples/conveyor_3.jpg", "cardboard", "magazine", "sheet of paper"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
       "justMyCode": false
