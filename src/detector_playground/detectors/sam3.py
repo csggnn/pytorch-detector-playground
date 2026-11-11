@@ -20,11 +20,14 @@ class Sam3Segmenter:
         with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
             self._inference_state = self._processor.set_image(image)
 
-    def segment(self, prompt: str, path: str):
+    def segment(self, prompts: list[str], path: str) -> dict[str, list]:
         self.load_image(path)
         with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
             self._processor.reset_all_prompts(self._inference_state)
-            output = self._processor.set_text_prompt(state=self._inference_state, prompt=prompt)
-        masks, boxes, scores = output["masks"], output["boxes"], output["scores"]
-        return {"masks": masks, "boxes": boxes, "scores": scores}
+            outputs={}
+            for prompt in prompts:
+                output = self._processor.set_text_prompt(state=self._inference_state, prompt=prompt)
+                outputs[prompt] = {"masks": output["masks"], "boxes": output["boxes"], "scores": output["scores"]}
+
+        return outputs
 

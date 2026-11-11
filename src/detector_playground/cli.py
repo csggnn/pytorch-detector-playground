@@ -1,22 +1,23 @@
-from PIL import Image
-from matplotlib import pyplot as plt
-from sam3.visualization_utils import plot_results
-from detector_playground.detectors.sam3 import Sam3Segmenter
 import argparse
 
+from matplotlib import pyplot as plt
+from PIL import Image
+
+from detector_playground.detectors.sam3 import Sam3Segmenter
+from detector_playground.visualization import plot_detections
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("image_path", help="Path to the image file")
-    parser.add_argument("prompt", help="Prompt for the segmentation task")
+    parser.add_argument(
+        "prompts",
+        nargs="+",
+        help='Object types to segment, separated by spaces. Quote multi-word prompts, e.g. "office paper".',
+    )
     args = parser.parse_args()
 
-
-    if args.image_path and args.prompt:
-        results =Sam3Segmenter().segment(path=args.image_path, prompt=args.prompt)
-        img0 = Image.open(args.image_path)
-        plot_results(img0, results)
-        plt.show()
-        plt.waitforbuttonpress()
-
+    results = Sam3Segmenter().segment(path=args.image_path, prompts=args.prompts)
+    print(", ".join(f"{label}: {len(result['scores'])}" for label, result in results.items()))
+    plot_detections(Image.open(args.image_path), results)
+    plt.show()
