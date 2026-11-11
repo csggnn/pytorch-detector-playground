@@ -21,5 +21,9 @@ Run commands from the repository root.
 ```
 uv sync
 uv run pytest                                                    # acceptance tests
-uv run python -m detector_playground.cli data/samples/conveyor_1.jpg cardboard
+uv run python -m detector_playground.cli data/samples/conveyor_3.jpg cardboard magazine "sheet of paper"
 ```
+
+The CLI prints the detection count per prompt and plots each prompt's masks and boxes in one colour:
+
+![Cardboard, magazine and sheet of paper detections on conveyor_3.jpg](docs/images/conveyor_3_detections.png)
